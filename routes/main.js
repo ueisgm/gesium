@@ -10,7 +10,7 @@
 		Home page of the application. Renders home.jade
 */
 exports.home = function(request, response) {
-	response.render('home');
+	response.render('index');
 };
 
 

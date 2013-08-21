@@ -1,0 +1,6 @@
+extends layout
+
+block content
+	form.form-group(action="/", method="post", enctype="multipart/form-data")
+		input.form-control(type='file', name='image', id='image')
+		input.form-control(type='submit', value='Submit')

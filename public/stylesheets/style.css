@@ -1,8 +1,21 @@
+html {
+	background-color: #11001C;
+}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.center{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 450px;
+	height: 200px;
+	text-align: center;
+	margin-top: -100px;
+	margin-left: -225px;
+}
+
+#upload_form {
+	margin-top: 20px;
 }

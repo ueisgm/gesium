@@ -19,7 +19,7 @@ var main = require('./routes/main');
 
 //	Configuration
 var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3009);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());

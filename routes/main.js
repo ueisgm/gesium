@@ -1,11 +1,11 @@
 /**
 *	Routes: main.js
 *
-*	Contains the main routing definitions for the Imgeus Application
+*	Main handler for routes for the Imgeus Application
 */
 
 
-var imageController = require('../controllers/images');
+var imagesController = require('../controllers/images');
 
 
 /**
@@ -23,5 +23,12 @@ exports.home = function(request, response) {
 		from the home page.
 */
 exports.upload = function(request, response) {
-	imageController.saveImage(request);
+	var data = new Object();
+	data.name = request.files.image.name;
+	data.size = request.files.image.size;
+	data.type = request.files.image.type;
+	data.path = request.files.image.path;
+
+	var id = imagesController.saveImage(data);
+	imagesController.loadImage(id);
 };

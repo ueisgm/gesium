@@ -4,7 +4,9 @@
 *	Controller for image model. Handles the saving of the images to the 
 *	filesystem and the database, and other crap
 */
-	
+
+var fs = require('fs');	
+var config = require('../configuration.json');
 
 //	Database configuration
 var mongoose = require('mongoose');
@@ -24,30 +26,42 @@ var Image = database.model('image', imageSchema);
 		page. For now, it simply parses the request and saves it in the
 		database.
 */
-function saveImage(request) { 
-	var name = request.files.image.name;
+function saveImage(data) { 
+	var name = data.name;
+	var size = data.size;
+	var type = data.type;
+	var tempPath = data.path;
 	var url = generateRandomURL(10, 'abcdefghijklmnopqrstuvwxyz01234567890'); // for now
-	var size = request.files.image.size;
-	var type = request.files.image.type;
+	var savePath = config.upload_directory + url; // for now
 
-
-	var image = new Image({
+	var image = new Image ({
 		name	: 	name,
 		url		: 	url,
 		size	: 	size
 	});
 
-	image.save();
-	console.log(name);
-	console.log(size);
-	console.log(type);
+	image.save();						// save to database MONGODB!
+	moveImage(tempPath, savePath);		// then move image from tmp directory to the correct upload directory
 };
 
 
 // TODO:
-function loadImage() {
-	//TODO:
+function loadImage(id) {
+
 };
+
+// TODO:
+function updateImage(data) {
+
+};
+
+// TODO:
+function deleteImage(id) {
+
+};
+
+
+//--- Helpers ---//
 
 // TODO: we should bring this out to a images_helper class or something
 function generateRandomURL(length, chars) {
@@ -57,6 +71,16 @@ function generateRandomURL(length, chars) {
 	}
 	return output;
 };
+
+
+function moveImage(from, to) {
+    fs.rename(from, to, function(error) {
+     	if(error) {
+     		// TODO: Do Something / log it somewhere
+     		console.log('Error while moving image');
+     	}
+    }); 
+}
 
 
 exports.saveImage = saveImage;

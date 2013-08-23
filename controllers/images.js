@@ -19,12 +19,13 @@ var Image = database.model('image', imageSchema);
 
 /**
 	Function: 	saveImage
-		
-		@param request	: 	request thingy uhh iunno
-
 		Called by the main.js(routes) by a post request in the main
 		page. For now, it simply parses the request and saves it in the
 		database.
+
+		@param request: 	request thingy uhh iunno
+
+		@return: the random unique url
 */
 function saveImage(data) { 
 	var name = data.name;
@@ -42,18 +43,29 @@ function saveImage(data) {
 
 	image.save();						// save to database MONGODB!
 	moveImage(tempPath, savePath);		// then move image from tmp directory to the correct upload directory
+
+	return url;							
 };
 
 
-// TODO:
-function loadImage(id) {
+/**
+	Function: 	loadImage
+		This fuction loads and renders the image.
 
+		@param id: 			unique identifier of the image, used in the URL
+		@param response: 	that hhingy that renders thing
+*/
+function loadImage(id, response) {
+	// for now, just display. There will be db queries as the application progresses
+	response.render('display', {id: id});
 };
+
 
 // TODO:
 function updateImage(data) {
 
 };
+
 
 // TODO:
 function deleteImage(id) {

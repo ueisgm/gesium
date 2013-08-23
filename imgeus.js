@@ -19,7 +19,7 @@ var main = require('./routes/main');
 
 //	Configuration
 var app = express();
-app.set('port', process.env.PORT || 3009);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -41,6 +41,7 @@ if ('development' == app.get('env')) {
 //	Define routing for the application
 app.get('/', main.home);
 app.post('/', main.upload);
+app.get('/:id', main.display);
 
 
 

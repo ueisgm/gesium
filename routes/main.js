@@ -4,7 +4,6 @@
 *	Main handler for routes for the Imgeus Application
 */
 
-
 var imagesController = require('../controllers/images');
 
 
@@ -30,5 +29,16 @@ exports.upload = function(request, response) {
 	data.path = request.files.image.path;
 
 	var id = imagesController.saveImage(data);
-	imagesController.loadImage(id);
+
+	imagesController.loadImage(id, response);
+};
+
+
+/**
+	Function: display
+		Displays the image specified the unique url.
+*/
+exports.display = function(request, response) {
+	var id = request.params.id;
+	imagesController.loadImage(id, response);
 };

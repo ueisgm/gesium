@@ -1,5 +1,7 @@
 html {
 	background-color: #11001C;
+	/*background-image: url("../assets/bg.jpg");*/
+	background-size: cover;
 }
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;

@@ -1,0 +1,7 @@
+{
+	"domain" 					: "http://localhost:3000",
+	"upload_directory" 			: "/Users/erikgui/gesium/public/images/",
+
+	"facebook_client_id" 		:	"498465340247976",
+	"facebook_client_secret"	:	"09518df3e39e6080851b67769285b599"
+}

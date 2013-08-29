@@ -9,6 +9,8 @@
     "express": "3.3.5",
     "ejs": "*",
     "mongoose": "*",
-    "mongod": "*"
+    "mongod": "*",
+    "passport-local": "*",
+    "passport-facebook": "*"
   }
 }

@@ -2,17 +2,16 @@
 *	Controller: images.js
 *
 *	Controller for image model. Handles the saving of the images to the 
-*	filesystem and the database, and other crap
+*	filesystem and the database, and other crap.
 */
 
 var fs = require('fs');	
-var config = require('../configuration.json');
+var config = require('../configuration/config.json');
 
 //	Database configuration
 var mongoose = require('mongoose');
 var databaseLink = 'mongodb://localhost/imgeus';			// use the imgeus database
 var database = mongoose.createConnection(databaseLink);
-
 var imageSchema = require('../models/image');
 var Image = database.model('image', imageSchema);
 
@@ -23,7 +22,7 @@ var Image = database.model('image', imageSchema);
 		page. For now, it simply parses the request and saves it in the
 		database.
 
-		@param request: 	request thingy uhh iunno
+		@param data: 	data bundle containing name, size, type and more goodies!
 
 		@return: the random unique url
 */
@@ -86,6 +85,8 @@ function generateRandomURL(length, chars) {
 
 
 function moveImage(from, to) {
+	console.log(from);
+	console.log(to);
     fs.rename(from, to, function(error) {
      	if(error) {
      		// TODO: Do Something / log it somewhere

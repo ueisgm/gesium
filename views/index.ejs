@@ -20,24 +20,9 @@
 </head>
 <body>
 	<div id="contents">
-		<div id="login_btn_container">
-			<span id="login_btn" class="glyphicon glyphicon-lock white"></span>
-			<span id="login_text" class="white">Login</span>
-		</div>
-		<div id="main">		
-			<img id="logo" src="assets/logo.png"/>
-			<ul id="fileName" class="list-group"></ul>
-			<form enctype="multipart/form-data" id="upload_form" class="form-inline" role="form" action="/" method="post">
-				<div class="btn btn-default" id="upload_btn">
-					<input type="file" id="image" name="image">
-				</div>
-				<input id="submit_button" type="submit" value="Upload" class="btn btn-default btn-lg"/>
-			</form>
-		</div>
+		<% include main %>
 	</div>
-	<footer>
-        <p>Footer Here</p>
-	</footer>
+	<% include footer %>
 	
 </body>
 

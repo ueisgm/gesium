@@ -11,6 +11,7 @@
     "mongoose": "*",
     "mongod": "*",
     "passport-local": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "async" : "*"
   }
 }

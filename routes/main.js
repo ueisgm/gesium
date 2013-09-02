@@ -11,7 +11,7 @@
 //	Controller modules
 var imagesController = require('../controllers/images');
 var usersController = require('../controllers/users');
-
+var async = require('async');
 
 /*** GET (HTTP METHOD) REQUESTS ***/
 
@@ -35,12 +35,21 @@ exports.success = function(request, response) {		// hooray! you succeeded in som
 exports.profile = function(request, response) { 	// display user profile
 	if(request.isAuthenticated()) {
 		var urls = [];
+		var count = 0;
 		for (var i = 0; i < request.user.uploads.length; i++) {
-			//urls.push(imagesController.getURL(request.user.uploads[i]));
-			console.log("(main.js) inside the loop:" + imagesController.getURL(request.user.uploads[i]));
+			async.parallel([
+				function(callback) {	
+					imagesController.getURL(request.user.uploads[i], callback);		
+				}
+			],
+			function(err, results) {
+				urls.push(results);
+				count++;
+				if (count == request.user.uploads.length) {
+					response.render('profile', { user : request.user, urls : urls});
+				}
+			});
 		}
-
-		response.render('profile', { user : request.user, urls : urls});
 	}
 	else {
 		response.render('login');

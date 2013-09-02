@@ -6,6 +6,7 @@
 */
 
 var fs = require('fs');	
+var async = require('async');
 var config = require('../configuration/config.json');
 
 //	Database configuration
@@ -80,10 +81,15 @@ function deleteImage(id) {
 
 };
 
-function getURL(id) {
+function getURL(id, callback) {
 	Image.findOne({_id : id}, function(err, image) {
-		console.log("(images.js) database callback: " + image.url);
-		return image.url;
+		//console.log("(images.js) database callback: " + image.url);
+		//return image.url;
+		//urls.push(image.url);
+		//response.render('profile', { user : request.user, urls : urls});
+		//console.log(image.url);
+		callback(null, image.url);
+		//return image.url;
 	});
 }
 //--- Helpers ---//

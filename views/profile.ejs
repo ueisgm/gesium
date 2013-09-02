@@ -1,5 +1,15 @@
 <h1>PROFILE</h1>
-<%= user %>
-<%= urls[0] %>
 
+<p>User info:</p>
+<%= user %>
+
+<p>urls:</p>
+<%= urls %>
+<br><br><br>
+
+<% for (var i = 0; i < urls.length; i++) { %>
+	<img height="20%" width="20%" src="images/<%= urls[i] %>">
+<% } %>
+
+<br><br><br>
 <a href='/logout'>LOG OUT</a>

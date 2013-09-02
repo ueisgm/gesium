@@ -33,7 +33,18 @@ exports.success = function(request, response) {		// hooray! you succeeded in som
 }
 
 exports.profile = function(request, response) { 	// display user profile
-	response.render('profile', { user : request.user});
+	if(request.isAuthenticated()) {
+		var urls = [];
+		for (var i = 0; i < request.user.uploads.length; i++) {
+			//urls.push(imagesController.getURL(request.user.uploads[i]));
+			console.log("(main.js) inside the loop:" + imagesController.getURL(request.user.uploads[i]));
+		}
+
+		response.render('profile', { user : request.user, urls : urls});
+	}
+	else {
+		response.render('login');
+	}
 }
 
 exports.logout = function(request, response) {		// log out
@@ -55,12 +66,16 @@ exports.upload = function(request, response) {
 	data.size = request.files.image.size;
 	data.type = request.files.image.type;
 	data.path = request.files.image.path;
+	
+	if (request.isAuthenticated()) {
+		data.uploaded_by = request.user._id;
+	}
 
-	var id = imagesController.saveImage(data);
+	var imageId = imagesController.saveImage(data, response);
 
-	// let's not over abstract for now - may or may not need this if more database calls are needed in the future
-	// imagesController.loadImage(id, response); 	
-	response.render('display', {id: id});
+	if (request.isAuthenticated()) {	
+		usersController.addImageToUser(request.user._id, imageId);
+	}
 }
 
 /**

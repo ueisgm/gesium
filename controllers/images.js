@@ -15,7 +15,6 @@ var database = mongoose.createConnection(databaseLink);
 var imageSchema = require('../models/image');
 var Image = database.model('image', imageSchema);
 
-
 /**
 	Function: 	saveImage
 		Called by the main.js(routes) by a post request in the main
@@ -26,24 +25,33 @@ var Image = database.model('image', imageSchema);
 
 		@return: the random unique url
 */
-function saveImage(data) { 
+function saveImage(data, response) { 
+
 	var name = data.name;
 	var size = data.size;
 	var type = data.type;
 	var tempPath = data.path;
+	var uploaded_by = data.uploaded_by;
 	var url = generateRandomURL(10, 'abcdefghijklmnopqrstuvwxyz01234567890'); // for now
 	var savePath = config.upload_directory + url; // for now
 
 	var image = new Image ({
-		name	: 	name,
-		url		: 	url,
-		size	: 	size
+		name			: 	name,
+		url				: 	url,
+		size			: 	size,
+		type			: 	type,
+		uploaded_by 	: 	uploaded_by,
+		time_uploaded 	: 	Date.now(),
+		view_count		: 	0,
+		bandwidth		: 	0
+
 	});
 
-	image.save();						// save to database MONGODB!
-	moveImage(tempPath, savePath);		// then move image from tmp directory to the correct upload directory
-
-	return url;							
+	image.save(function(err, image) {
+		moveImage(tempPath, savePath);
+		loadImage(image._id, response);
+	});						// save to database MONGODB!		// then move image from tmp directory to the correct upload directory
+	return image._id;
 };
 
 
@@ -52,11 +60,12 @@ function saveImage(data) {
 		This fuction loads and renders the image.
 
 		@param id: 			unique identifier of the image, used in the URL
-		@param response: 	that hhingy that renders thing
+		@param response: 	that thingy that renders thing
 */
 function loadImage(id, response) {
-	// for now, just display. There will be db queries as the application progresses
-	response.render('display', {id: id});
+	Image.findOne({_id : id}, function(err, image) {
+		response.render('display', {id: image.url});
+	});
 };
 
 
@@ -71,7 +80,12 @@ function deleteImage(id) {
 
 };
 
-
+function getURL(id) {
+	Image.findOne({_id : id}, function(err, image) {
+		console.log("(images.js) database callback: " + image.url);
+		return image.url;
+	});
+}
 //--- Helpers ---//
 
 // TODO: we should bring this out to a images_helper class or something
@@ -85,8 +99,6 @@ function generateRandomURL(length, chars) {
 
 
 function moveImage(from, to) {
-	console.log(from);
-	console.log(to);
     fs.rename(from, to, function(error) {
      	if(error) {
      		// TODO: Do Something / log it somewhere
@@ -98,3 +110,4 @@ function moveImage(from, to) {
 
 exports.saveImage = saveImage;
 exports.loadImage = loadImage;
+exports.getURL = getURL;

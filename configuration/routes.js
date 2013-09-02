@@ -31,7 +31,7 @@ module.exports = function(app, passport) {
 	                                      	failureRedirect: '/login' }));
 
 	// User Profile / Gallery
-	app.get('/profile', usersController.validateAuthentication, main.profile);
+	app.get('/profile', main.profile);
 
 	// Log Out
 	app.get('/logout', main.logout);

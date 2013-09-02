@@ -31,12 +31,12 @@ function register(email, password, done) {
 		i.e. does the user have a live session? If so, go on to
 		the next route (call next()), if not, back to the LOGIN screen.
 */
-function validateAuthentication(request, response, next) {
+function validateAuthentication(request) {
     if(request.isAuthenticated()){
-        next();
+        return request.user;
     }
     else {
-        response.redirect("/login");
+        return false;
     }
 }
 
@@ -99,7 +99,16 @@ function authenticateFacebook(profile, done){
 	});	
 }
 
+function addImageToUser(userID, imageID) {
+	User.findOne({'_id' : userID}, function(err, user) {
+		user.uploads.push(imageID);
+		user.save();
+	});
+}
+
 exports.register = register;
 exports.authenticateImgeus = authenticateImgeus;
 exports.authenticateFacebook = authenticateFacebook;
 exports.validateAuthentication = validateAuthentication;
+
+exports.addImageToUser = addImageToUser;

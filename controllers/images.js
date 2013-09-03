@@ -26,15 +26,16 @@ var Image = database.model('image', imageSchema);
 
 		@return: the random unique url
 */
-function saveImage(data, response) { 
+function saveImage(data, callback) { 
 
 	var name = data.name;
 	var size = data.size;
 	var type = data.type;
 	var tempPath = data.path;
 	var uploaded_by = data.uploaded_by;
-	var url = generateRandomURL(10, 'abcdefghijklmnopqrstuvwxyz01234567890'); // for now
-	var savePath = config.upload_directory + url; // for now
+	var url = generateRandomURL(config.url_length, 'abcdefghijklmnopqrstuvwxyz01234567890'); // for now
+
+	var savePath = getSavePath(url); // for now
 
 	var image = new Image ({
 		name			: 	name,
@@ -48,10 +49,12 @@ function saveImage(data, response) {
 
 	});
 
-	image.save(function(err, image) {
-		moveImage(tempPath, savePath);
-		loadImage(image._id, response);
-	});						// save to database MONGODB!		// then move image from tmp directory to the correct upload directory
+	image.save(function(err, image) {	// save to database MONGODB
+		callback(null, image.url);
+	});
+	
+	moveImage(tempPath, savePath); // move image from tmp directory to the correct upload directory
+	
 	return image._id;
 };
 
@@ -65,7 +68,9 @@ function saveImage(data, response) {
 */
 function loadImage(id, response) {
 	Image.findOne({_id : id}, function(err, image) {
-		response.render('display', {id: image.url});
+		var path = getSavePath(image.url);
+		var relativePath = path.substring(config.upload_directory.length);
+		response.render('display', {id: relativePath});
 	});
 };
 
@@ -83,18 +88,16 @@ function deleteImage(id) {
 
 function getURL(id, callback) {
 	Image.findOne({_id : id}, function(err, image) {
-		//console.log("(images.js) database callback: " + image.url);
-		//return image.url;
-		//urls.push(image.url);
-		//response.render('profile', { user : request.user, urls : urls});
-		//console.log(image.url);
 		callback(null, image.url);
-		//return image.url;
 	});
 }
-//--- Helpers ---//
 
-// TODO: we should bring this out to a images_helper class or something
+
+
+//--- Helpers ---//
+// TODO: we should bring this out to a images_helper class or something?
+
+// Bleh
 function generateRandomURL(length, chars) {
 	var output = '';
 	for (var i = length; i > 0; i--) {
@@ -103,7 +106,7 @@ function generateRandomURL(length, chars) {
 	return output;
 };
 
-
+// Move an image (or a file) from a [from path] to a [to path]
 function moveImage(from, to) {
     fs.rename(from, to, function(error) {
      	if(error) {
@@ -113,6 +116,25 @@ function moveImage(from, to) {
     }); 
 }
 
+// Given an image url, create 'index' directories as discussed. Return the path
+function getSavePath(url) {
+
+	// Get the 'indices' first two characters, and the next two characters!
+	var indexOne = config.upload_directory + url.substring( (url.length-config.url_length), (url.length-config.url_length + 2) );
+	var indexTwo = indexOne + "/" + url.substring( (url.length-config.url_length) + 2, (url.length-config.url_length + 4) );
+	var path = indexTwo + "/" + url.substring(url.length-config.url_length + 4);
+
+	// create directories if they don't exist
+	if(!fs.existsSync(indexOne)) {
+		fs.mkdirSync(indexOne);
+		fs.mkdirSync(indexTwo);
+	}
+	if(!fs.existsSync(indexTwo)) {
+		fs.mkdirSync(indexTwo);
+	}
+
+	return path;		// return the final save path
+}
 
 exports.saveImage = saveImage;
 exports.loadImage = loadImage;

@@ -13,6 +13,7 @@ var imagesController = require('../controllers/images');
 var usersController = require('../controllers/users');
 var async = require('async');
 
+
 /*** GET (HTTP METHOD) REQUESTS ***/
 
 exports.home = function(request, response) {		// Imgeus home page
@@ -21,7 +22,7 @@ exports.home = function(request, response) {		// Imgeus home page
 
 exports.display = function(request, response) {		// displays a single picture
 	var id = request.params.id;
-	response.render('display', {id: id});
+	imagesController(id, response);
 }
 
 exports.login = function(request, response) {		// login screen display
@@ -33,26 +34,33 @@ exports.success = function(request, response) {		// hooray! you succeeded in som
 }
 
 exports.profile = function(request, response) { 	// display user profile
-	if(request.isAuthenticated()) {
+	
+	// if the user is logged in, find all the urls
+	if(request.isAuthenticated()) {				
 		var urls = [];
-		var count = 0;
+
+		// for all the uploaded images by the user, find the URLs of the images. SNYNCHRONOUSLY!
 		for (var i = 0; i < request.user.uploads.length; i++) {
-			async.parallel([
-				function(callback) {	
-					imagesController.getURL(request.user.uploads[i], callback);		
+			async.series(
+				[			
+					function(callback) {	
+						imagesController.getURL(request.user.uploads[i], callback);		
+					}
+				],
+				function(err, results) {
+					urls.push(results);
+					if (urls.length == request.user.uploads.length) {		// only render when all the urls have been retrieved
+						response.render('profile', { user : request.user, urls : urls});
+					}
 				}
-			],
-			function(err, results) {
-				urls.push(results);
-				count++;
-				if (count == request.user.uploads.length) {
-					response.render('profile', { user : request.user, urls : urls});
-				}
-			});
+			);
 		}
+
 	}
-	else {
-		response.render('login');
+
+	// if the user is not logged in, render the login page
+	else {				
+		response.render('login');			
 	}
 }
 
@@ -60,6 +68,8 @@ exports.logout = function(request, response) {		// log out
 	request.logout();
 	response.render('login');
 }
+
+
 
 /*** POST (HTTP METHOD) REQUESTS ***/
 
@@ -70,21 +80,33 @@ exports.logout = function(request, response) {		// log out
 */
 exports.upload = function(request, response) {
 
-	var data = new Object();
+	var data = new Object();				// a data object to bundle up the info to store image data
 	data.name = request.files.image.name;
 	data.size = request.files.image.size;
 	data.type = request.files.image.type;
 	data.path = request.files.image.path;
 	
-	if (request.isAuthenticated()) {
+	if (request.isAuthenticated()) {		// if an user is logged in, image has an uploaded_by property
 		data.uploaded_by = request.user._id;
 	}
 
-	var imageId = imagesController.saveImage(data, response);
+	var imageId;					// the unique image _id of the uploaded image
 
-	if (request.isAuthenticated()) {	
-		usersController.addImageToUser(request.user._id, imageId);
-	}
+	async.series(
+		[
+			function(callback) {	// force synchronous function call; save image and find the image id
+				imageId = imagesController.saveImage(data, callback);		// TODO: WARNING! THIS JUST MIIIIIGHT MAYBE CAUSE AN ISSUE - 
+																			// May call back first before returning the value. Will have to watch out for it
+			}
+		],
+		function(err, results) {	// after the function finishes, load image and link image to a user
+			imagesController.loadImage(imageId, response);
+			if (request.isAuthenticated()) {	
+				usersController.addImageToUser(request.user._id, imageId);
+			}
+		}
+	);
+
 }
 
 /**

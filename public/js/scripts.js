@@ -7,8 +7,11 @@ $(function() {
 		$("#submit_button").val("Start Upload")
 	});
 
+	// $("#upload_btn").click(function() {
+	// 	$("#image").trigger("click");
+	// });
+
 	$("login_btn_container").mouseenter(function() {
-		console.log("enretede");
 		$("login_text").css({opacity: 1});
 	});
 });

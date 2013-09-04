@@ -4,7 +4,8 @@ var userSchema = new Schema ({
 	firstName	:  	String,
 	lastName	:   String,
 	email		: 	String,
-	password	: 	String,
+	hash		: 	String,
+	salt		: 	String,
 	facebook	: 	{
 		id		:   String,
 		email	: 	String,

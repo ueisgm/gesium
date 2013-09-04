@@ -12,6 +12,7 @@
     "mongod": "*",
     "passport-local": "*",
     "passport-facebook": "*",
-    "async" : "*"
+    "async" : "*",
+    "bcrypt" : "*"
   }
 }

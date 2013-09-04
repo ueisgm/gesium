@@ -36,8 +36,13 @@ exports.success = function(request, response) {		// hooray! you succeeded in som
 exports.profile = function(request, response) { 	// display user profile
 	
 	// if the user is logged in, find all the urls
-	if(request.isAuthenticated()) {				
+	if(request.isAuthenticated()) {			
 		var urls = [];
+
+		if (request.user.uploads.length == 0) {
+			// if the user has no uploads, still display the profile!
+			response.render('profile', { user : request.user, urls : urls});
+		}
 
 		// for all the uploaded images by the user, find the URLs of the images. SNYNCHRONOUSLY!
 		for (var i = 0; i < request.user.uploads.length; i++) {

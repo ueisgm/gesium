@@ -11,16 +11,23 @@ var databaseLink = 'mongodb://localhost/imgeus';
 var database = mongoose.createConnection(databaseLink);
 var userSchema = require('../models/user');
 var User = database.model('user', userSchema);
+var bcrypt = require('bcrypt');
 
 
 /**
 	Function: register
 		Register / signs up the user. Called by a post request (sign up).
+		Generate the salt and hash using bcrypt.
 */
 function register(email, password, done) {
+	var salt = bcrypt.genSaltSync(10);
+	var hash = bcrypt.hashSync(password, salt);
+
 	var user = new User ({
 		email : email,
-		password : password
+		hash : hash,
+		salt : salt,
+		last_login : Date.now(),
 	});
 	user.save();
 }
@@ -44,7 +51,7 @@ function validateAuthentication(request) {
 	Function: authenticateImgeus
 		Attempts to authenticate the user with Imgeus (local/native) credentials.
 		Checks to see if the user exists in the database. If so, return done()
-		wtih the user record
+		wtih the user record.
 */
 function authenticateImgeus(email, password, done){
 	User.findOne({email : email}, function(err, user){
@@ -56,8 +63,8 @@ function authenticateImgeus(email, password, done){
 			return done(null, false, { message : 'Incorrect email.' });
 		}
 
-		if (password == user.password) {
-			return done(null, user);
+		if (bcrypt.compareSync(password, user.hash)) {
+			done(null, user);
 		}
 		else {
 			done(null, false, {message : 'Incorrect password'});
@@ -104,6 +111,10 @@ function addImageToUser(userID, imageID) {
 		user.uploads.push(imageID);
 		user.save();
 	});
+}
+
+function hash(password, salt) {
+
 }
 
 exports.register = register;

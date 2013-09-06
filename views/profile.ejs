@@ -1,15 +1,35 @@
+
 <h1>PROFILE</h1>
 
 <p>User info:</p>
-<%= user %>
+<%= user.uploads %>
 
 <p>urls:</p>
 <%= urls %>
-<br><br><br>
 
-<% for (var i = 0; i < urls.length; i++) { %>
-	<img height="20%" width="20%" src="images/<%= (""+urls[i]).substring(0,2) %>/<%= (""+urls[i]).substring(2,4) %>/<%= (""+urls[i]).substring(4) %>">
-<% } %>
-
-<br><br><br>
 <a href='/logout'>LOG OUT</a>
+
+<link href="libs/swipebox/swipebox.css" rel="stylesheet" />
+<link href="stylesheets/gallery.css" rel="stylesheet">
+
+
+<div id="loading"></div>
+
+<div id="gallery">
+	<% for (var i = 0; i < urls.length; i++) { %>
+		<a href="images/<%= (""+urls[i]).substring(0,2) %>/<%= (""+urls[i]).substring(2,4) %>/<%= (""+urls[i]).substring(4) %>" class="swipebox show" style="width:143px;height:141px;background-image:url(images/<%= (""+urls[i]).substring(0,2) %>/<%= (""+urls[i]).substring(2,4) %>/<%= (""+urls[i]).substring(4) %>)"></a>
+	<% } %>
+	
+
+</div>
+
+<!-- JavaScript Includes -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="libs/swipebox/jquery.swipebox.min.js"></script>
+<script type="text/javascript" src="libs/jquery.loadImage.js"></script>
+<script type="text/javascript" src="js/gallery.js"></script>
+
+<!--
+<% include gallery %>
+-->

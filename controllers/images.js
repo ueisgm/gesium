@@ -8,6 +8,7 @@
 var fs = require('fs');	
 var async = require('async');
 var config = require('../configuration/config.json');
+var easyimg = require('easyimage');
 
 //	Database configuration
 var mongoose = require('mongoose');
@@ -54,7 +55,7 @@ function saveImage(data, callback) {
 	});
 	
 	moveImage(tempPath, savePath); // move image from tmp directory to the correct upload directory
-	
+	createThumbnail(savePath);
 	return image._id;
 };
 
@@ -92,12 +93,16 @@ function getURL(id, callback) {
 	});
 }
 
+function getPath(id, callback) {
+
+};
+
 
 
 //--- Helpers ---//
 // TODO: we should bring this out to a images_helper class or something?
 
-// Bleh
+// Generates a random URL with the specified length and a given set of characters
 function generateRandomURL(length, chars) {
 	var output = '';
 	for (var i = length; i > 0; i--) {
@@ -105,6 +110,7 @@ function generateRandomURL(length, chars) {
 	}
 	return output;
 };
+
 
 // Move an image (or a file) from a [from path] to a [to path]
 function moveImage(from, to) {
@@ -115,6 +121,7 @@ function moveImage(from, to) {
      	}
     }); 
 }
+
 
 // Given an image url, create 'index' directories as discussed. Return the path
 function getSavePath(url) {
@@ -134,6 +141,24 @@ function getSavePath(url) {
 	}
 
 	return path;		// return the final save path
+}
+
+
+// creates a thumbnail image of the image specified by the imagePath
+function createThumbnail(imagePath) {
+	easyimg.thumbnail(
+		{
+			src		: 	imagePath, 
+			dst		: 	imagePath+'_thumb',
+			width	: 	128, 
+			height	: 	128,
+			x		: 	0, 
+			y		: 	0
+		},
+		function(err, image) {
+			if (err) throw err;
+		}
+	);
 }
 
 exports.saveImage = saveImage;

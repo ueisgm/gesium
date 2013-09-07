@@ -90,6 +90,8 @@ exports.upload = function(request, response) {
 	data.size = request.files.image.size;
 	data.type = request.files.image.type;
 	data.path = request.files.image.path;
+
+	console.log(request.files);
 	
 	if (request.isAuthenticated()) {		// if an user is logged in, image has an uploaded_by property
 		data.uploaded_by = request.user._id;

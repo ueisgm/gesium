@@ -13,6 +13,7 @@
     "passport-local": "*",
     "passport-facebook": "*",
     "async" : "*",
-    "bcrypt" : "*"
+    "bcrypt" : "*",
+    "easyimage" : "*"
   }
 }

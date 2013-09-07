@@ -22,7 +22,7 @@ exports.home = function(request, response) {		// Imgeus home page
 
 exports.display = function(request, response) {		// displays a single picture
 	var id = request.params.id;
-	imagesController(id, response);
+	imagesController.loadImage(id, response);
 }
 
 exports.login = function(request, response) {		// login screen display
@@ -91,7 +91,6 @@ exports.upload = function(request, response) {
 	data.type = request.files.image.type;
 	data.path = request.files.image.path;
 
-	console.log(request.files);
 	
 	if (request.isAuthenticated()) {		// if an user is logged in, image has an uploaded_by property
 		data.uploaded_by = request.user._id;

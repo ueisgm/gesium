@@ -60,6 +60,7 @@ function saveImage(data, callback) {
 };
 
 
+
 /**
 	Function: 	loadImage
 		This fuction loads and renders the image.

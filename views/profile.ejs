@@ -15,13 +15,7 @@
 
 <div id="loading"></div>
 
-<div id="gallery">
-	<% for (var i = 0; i < urls.length; i++) { %>
-		<a href="images/<%= (""+urls[i]).substring(0,2) %>/<%= (""+urls[i]).substring(2,4) %>/<%= (""+urls[i]).substring(4) %>" class="swipebox show" style="width:143px;height:141px;background-image:url(images/<%= (""+urls[i]).substring(0,2) %>/<%= (""+urls[i]).substring(2,4) %>/<%= (""+urls[i]).substring(4) %>)"></a>
-	<% } %>
-	
-
-</div>
+<div id="gallery"></div>
 
 <!-- JavaScript Includes -->
 
@@ -29,7 +23,3 @@
 <script type="text/javascript" src="libs/swipebox/jquery.swipebox.min.js"></script>
 <script type="text/javascript" src="libs/jquery.loadImage.js"></script>
 <script type="text/javascript" src="js/gallery.js"></script>
-
-<!--
-<% include gallery %>
--->

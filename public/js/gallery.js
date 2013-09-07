@@ -1,7 +1,6 @@
 $(function(){
 
 	// Global variables that hold state
-
 	var page = 0,
 		per_page = 100,
 		photo_default_size = 150,
@@ -11,18 +10,24 @@ $(function(){
 		data = [];
 
 	// Global variables that cache selectors
-
 	var win = $(window),
 		loading = $('#loading'),
 		gallery = $('#gallery');
 
-	// Fetch all the available images with 
-	// a GET AJAX request
+
+	// AJAX Call to Server: simply retrieves the end URLS (e.g. 'd8vk38vdl') of user uploaded images
+	$.getJSON('/galleryToJSON', function(data1) {
+
+		$.each(data1, function(key, val) {
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+		});
+
+		gallery.trigger('data-ready');	  
+	});	
+
+
+	gallery.trigger('loading');
 	
-	// Trigger our custom data-ready event
-	gallery.trigger('data-ready');
-
-
 	// Redraw the photos on screen
 	gallery.on('data-ready window-resized page-turned', function(event, direction){
 
@@ -38,11 +43,13 @@ $(function(){
 
 			// Create a deferred for each image, so
 			// we know when they are all loaded
-			deferreds.push($.loadImage(this.thumb));
+			deferreds.push($.loadImage('<a href="' + this + '" class="swipebox"' +
+						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this + ')">'+
+						'</a>'));
 
 			// build the cache
-			cache.push('<a href="' + this.large + '" class="swipebox"' +
-						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this.thumb + ')">'+
+			cache.push('<a href="' + this + '" class="swipebox"' +
+						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this + ')">'+
 						'</a>');
 		});
 
@@ -81,14 +88,19 @@ $(function(){
 			}
 			else{
 
-				// Create a fade out effect
+				// Add the photos to the gallery
 				gallery.fadeOut(function(){
 
-					// Add the photos to the gallery
 					gallery.html(cache.join(''));
 
-					if(event.type == 'page-turned' && direction == 'br'){
-						show_photos_with_animation_br();
+					if(event.type == 'page-turned'){
+
+						if(direction == 'br'){
+							show_photos_with_animation_br();
+						}
+						else{
+							show_photos_with_animation_tl();
+						}
 					}
 					else{
 						show_photos_with_animation_tl();
@@ -281,17 +293,12 @@ $(function(){
 	}
 
 	function is_next_page(){
-
-		// Should we show the next arrow?
-
 		return data.length > get_page_start(page + 1);
 	}
 
 	function is_prev_page(){
-
-		// Should we show the previous arrow?
-
 		return page > 0;
 	}
 
 });
+

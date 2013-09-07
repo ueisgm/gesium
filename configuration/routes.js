@@ -36,6 +36,12 @@ module.exports = function(app, passport) {
 	// Log Out
 	app.get('/logout', main.logout);
 
+	// JSON representation of User Gallery  
+	app.get('/galleryToJSON', main.galleryToJSON);
+
+
 	// Simple image display
 	app.get('/:id', main.display);
+
+
 }

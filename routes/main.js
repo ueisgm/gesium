@@ -122,3 +122,42 @@ exports.signup = function(request, response) {
 	usersController.register(request.body.email, request.body.password);
 	response.render('success');
 }
+
+
+// Too tired, will refactor soon
+exports.galleryToJSON = function(request, response) {
+	//console.log("called!");
+	if (request.isAuthenticated()) {
+		var output = {};
+		var urls = [];
+
+		if (request.user.uploads.length == 0) {
+			// if the user has no uploads, still display the profile!
+			response.render('profile', { user : request.user, urls : urls});
+		}
+
+		// for all the uploaded images by the user, find the URLs of the images. SNYNCHRONOUSLY!
+		for (var i = 0; i < request.user.uploads.length; i++) {
+			async.series(
+				[			
+					function(callback) {	
+						imagesController.getURL(request.user.uploads[i], callback);		
+					}
+				],
+				function(err, results) {
+					urls.push(results);
+					if (urls.length == request.user.uploads.length) {		// only render when all the urls have been retrieved
+						for (var j = 0; j < urls.length; j++) {
+							output[j] = urls[j];
+							//console.log(urls[j][0]);
+						}
+						response.json(output);
+					}
+				}
+			);
+		}
+	}
+	else {
+		response.render('login');
+	}
+};

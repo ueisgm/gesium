@@ -51,10 +51,10 @@ body {
 
 #login_btn {
 	position: absolute;
-	top: 8px;
+	top: 6px;
 	left: 20px;
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 28px;
 }
 #contents {
     position:relative;
@@ -82,7 +82,7 @@ body {
 
 #upload_btn {
     width: 200px;
-    height: 45px;
+    height: 43px;
     /*background: url(http://placehold.it/200x35&text=ChooseFileButton.jpg);*/
     overflow: hidden;
     font-size: 18px;
@@ -94,13 +94,18 @@ body {
 
 #upload_btn input {
     display: block !important;
-    width: 450px !important;
-    height: 60px !important;
+    width: 100% !important;
+    height: 100% !important;
     opacity: 0 !important;
     overflow: hidden !important;
 }
 #upload_btn input {
     cursor: pointer;
+}
+#upload_btn_txt {
+    position: absolute;
+    top: 12px;
+    left: 70px;
 }
 
 /*

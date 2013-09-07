@@ -1,15 +1,15 @@
 <div id="login_btn_container" onclick="location.href='/login'">
-	<span id="login_btn" class="glyphicon glyphicon-lock white"></span>
+	<span id="login_btn" class="fi-lock white"></span>
 	<span id="login_text" class="white">Login</span>
 </div>
 <div id="main">		
 	<img id="logo" src="assets/logo.png"/>
 	<ul id="fileName" class="list-group"></ul>
 	<form enctype="multipart/form-data" id="upload_form" class="form-inline" role="form" action="/" method="post">
-		<div class="btn btn-default" id="upload_btn">
-			<!-- <p>Choose an Image</p> -->
+		<div class="button" id="upload_btn">
+			<span id="upload_btn_txt">Upload</span>
 			<input type="file" id="image" name="image">
 		</div>
-		<input id="submit_button" type="submit" value="Upload" class="btn btn-default btn-lg"/>
+		<!-- <input id="submit_button" type="submit" value="Upload" class="button"/> -->
 	</form>
 </div>

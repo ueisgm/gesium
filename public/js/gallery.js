@@ -17,8 +17,46 @@ $(function(){
 
 	// AJAX Call to Server: simply retrieves the end URLS (e.g. 'd8vk38vdl') of user uploaded images
 	$.getJSON('/galleryToJSON', function(data1) {
-
 		$.each(data1, function(key, val) {
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
+			
 			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
 		});
 

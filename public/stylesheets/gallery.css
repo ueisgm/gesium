@@ -43,7 +43,7 @@ section, footer, header, aside{
 	display:none;
 	width:40px;
 	height:40px;
-	background:url(../img/preloader.gif) no-repeat center center;
+	background:url(../assets/preloader.gif) no-repeat center center;
 	position:fixed;
 	top:50%;
 	left:50%;
@@ -97,11 +97,11 @@ section, footer, header, aside{
 }
 
 #gallery a.next{
-	background-image:url('../img/arrow_next.jpg');
+	background-image:url('../assets/arrow_next.jpg');
 }
 
 #gallery a.prev{
-	background-image:url('../img/arrow_prev.jpg');
+	background-image:url('../assets/arrow_prev.jpg');
 }
 
 #gallery a.show{

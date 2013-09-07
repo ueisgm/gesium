@@ -19,45 +19,6 @@ $(function(){
 	$.getJSON('/galleryToJSON', function(data1) {
 		$.each(data1, function(key, val) {
 			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
-			
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
 		});
 
 		gallery.trigger('data-ready');	  

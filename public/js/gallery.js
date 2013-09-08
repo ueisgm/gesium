@@ -18,7 +18,7 @@ $(function(){
 	// AJAX Call to Server: simply retrieves the end URLS (e.g. 'd8vk38vdl') of user uploaded images
 	$.getJSON('/galleryToJSON', function(data1) {
 		$.each(data1, function(key, val) {
-			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4)+"_thumb");
+			data.push('images/' + (""+val).substring(0,2)+"/"+(""+val).substring(2,4)+"/"+(""+val).substring(4));
 		});
 
 		gallery.trigger('data-ready');	  
@@ -42,13 +42,11 @@ $(function(){
 
 			// Create a deferred for each image, so
 			// we know when they are all loaded
-			deferreds.push($.loadImage('<a href="' + this + '" class="swipebox"' +
-						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this + ')">'+
-						'</a>'));
+			deferreds.push($.loadImage(this));
 
 			// build the cache
 			cache.push('<a href="' + this + '" class="swipebox"' +
-						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this + ')">'+
+						'style="width:' + picture_width + 'px;height:' + picture_height + 'px;background-image:url(' + this+"_thumb" + ')">'+
 						'</a>');
 		});
 

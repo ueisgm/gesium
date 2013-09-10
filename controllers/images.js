@@ -17,13 +17,14 @@ var database = mongoose.createConnection(databaseLink);
 var imageSchema = require('../models/image');
 var Image = database.model('image', imageSchema);
 
+
 /**
 	Function: 	saveImage
 		Called by the main.js(routes) by a post request in the main
 		page. For now, it simply parses the request and saves it in the
 		database.
 
-		@param data: 	data bundle containing name, size, type and more goodies!
+		@param data 	: 	data bundle containing name, size, type and more goodies!
 
 		@return: the random unique url
 */
@@ -50,53 +51,49 @@ function saveImage(data, callback) {
 
 	});
 
-	image.save(function(err, image) {	// save to database MONGODB
-		callback(null, image.url);
-	});
-	
-	moveImage(tempPath, savePath); // move image from tmp directory to the correct upload directory
-	createThumbnail(savePath);
-	return image._id;
-};
-
+	async.series(										
+		[
+			function(callback) {							// 1. save to Mongo DB
+				image.save(function(err, image) {	
+					callback(null, image);
+				});
+			},
+			function(callback) {
+				moveImage(tempPath, savePath, callback); 	// 2. move image from tmp directory to the correct upload directory
+			},
+			function(callback) {
+				createThumbnail(savePath, callback);		// 3. create the thumbnail
+			}
+		],
+		function(err, results) {
+			callback(null, results[0]);						// 3. return the image object
+		}
+	);
+}
 
 
 /**
-	Function: 	loadImage
-		This fuction loads and renders the image.
+	findImage : retrieves the image object from the database from the unique _id of image
 
-		@param id: 			unique identifier of the image, used in the URL
-		@param response: 	that thingy that renders thing
+	@param	_id 	: 	unique id of the image record/object
+	@param callback : 	used to signal async series procedure - returns the image object
 */
-function loadImage(id, response) {
-	Image.findOne({_id : id}, function(err, image) {
-		var path = getSavePath(image.url);
-		var relativePath = path.substring(config.upload_directory.length);
-		response.render('display', {id: relativePath});
-	});
-};
-
-
-// TODO:
-function updateImage(data) {
-
-};
-
-
-// TODO:
-function deleteImage(id) {
-
-};
-
-function getURL(id, callback) {
-	Image.findOne({_id : id}, function(err, image) {
-		callback(null, image.url);
+function findImage(_id, callback) {
+	Image.findOne({_id : _id}, function(err, image) {
+		callback(null, image);
 	});
 }
 
-function getPath(id, callback) {
 
-};
+function updateImage(id, data, callback) {
+	// TODO!
+}
+
+
+function deleteImage(_id) {
+	// TODO!
+}
+
 
 
 
@@ -114,12 +111,12 @@ function generateRandomURL(length, chars) {
 
 
 // Move an image (or a file) from a [from path] to a [to path]
-function moveImage(from, to) {
+function moveImage(from, to, callback) {
     fs.rename(from, to, function(error) {
      	if(error) {
-     		// TODO: Do Something / log it somewhere
      		console.log('Error while moving image');
      	}
+     	callback(null);
     }); 
 }
 
@@ -146,7 +143,7 @@ function getSavePath(url) {
 
 
 // creates a thumbnail image of the image specified by the imagePath
-function createThumbnail(imagePath) {
+function createThumbnail(imagePath, callback) {
 	easyimg.thumbnail(
 		{
 			src		: 	imagePath, 
@@ -158,10 +155,11 @@ function createThumbnail(imagePath) {
 		},
 		function(err, image) {
 			if (err) throw err;
+			callback(null);
 		}
 	);
 }
 
 exports.saveImage = saveImage;
-exports.loadImage = loadImage;
-exports.getURL = getURL;
+exports.findImage = findImage;
+exports.getSavePath = getSavePath;

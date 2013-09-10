@@ -12,17 +12,19 @@
 var imagesController = require('../controllers/images');
 var usersController = require('../controllers/users');
 var async = require('async');
-
+var config = require('../configuration/config.json');
 
 /*** GET (HTTP METHOD) REQUESTS ***/
 
-exports.home = function(request, response) {		// Imgeus home page
+// The Imgeus(TM) home page
+exports.home = function(request, response) {
 	response.render('index');
 }
 
-exports.display = function(request, response) {		// displays a single picture
-	var id = request.params.id;
-	imagesController.loadImage(id, response);
+// Displays a Single image view
+exports.display = function(request, response) {
+	var _id = request.params.id;
+	displayHelper(_id, response);
 }
 
 exports.login = function(request, response) {		// login screen display
@@ -49,11 +51,11 @@ exports.profile = function(request, response) { 	// display user profile
 			async.series(
 				[			
 					function(callback) {	
-						imagesController.getURL(request.user.uploads[i], callback);		
+						imagesController.findImage(request.user.uploads[i], callback);		
 					}
 				],
 				function(err, results) {
-					urls.push(results);
+					urls.push(results[0].url);
 					if (urls.length == request.user.uploads.length) {		// only render when all the urls have been retrieved
 						response.render('profile', { user : request.user, urls : urls});
 					}
@@ -96,17 +98,15 @@ exports.upload = function(request, response) {
 		data.uploaded_by = request.user._id;
 	}
 
-	var imageId;					// the unique image _id of the uploaded image
-
-	async.series(
+	async.series(					
 		[
-			function(callback) {	// force synchronous function call; save image and find the image id
-				imageId = imagesController.saveImage(data, callback);		// TODO: WARNING! THIS JUST MIIIIIGHT MAYBE CAUSE AN ISSUE - 
-																			// May call back first before returning the value. Will have to watch out for it
-			}
+			function(callback) {	// force synchronous function call; save image must be done
+				imagesController.saveImage(data, callback);
+			},
 		],
 		function(err, results) {	// after the function finishes, load image and link image to a user
-			imagesController.loadImage(imageId, response);
+			var imageId = results[0]._id
+			displayHelper(imageId, response);
 			if (request.isAuthenticated()) {	
 				usersController.addImageToUser(request.user._id, imageId);
 			}
@@ -142,11 +142,11 @@ exports.galleryToJSON = function(request, response) {
 			async.series(
 				[			
 					function(callback) {	
-						imagesController.getURL(request.user.uploads[i], callback);		
+						imagesController.findImage(request.user.uploads[i], callback);		
 					}
 				],
 				function(err, results) {
-					urls.push(results);
+					urls.push(results[0].url);
 					if (urls.length == request.user.uploads.length) {		// only render when all the urls have been retrieved
 						for (var j = 0; j < urls.length; j++) {
 							output[j] = urls[j];
@@ -162,3 +162,18 @@ exports.galleryToJSON = function(request, response) {
 		response.render('login');
 	}
 };
+
+function displayHelper(_id, response) {
+	async.series(
+		[
+			function(callback) {
+				imagesController.findImage(_id, callback);
+			}
+		],
+		function(err, results) {
+			var fullPath = imagesController.getSavePath(results[0].url);
+			var relativePath = fullPath.substring(config.upload_directory.length);
+			response.render('display', {id: relativePath});
+		}
+	);
+}

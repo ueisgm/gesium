@@ -1,25 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include head %>
+<body>
+	<div id="contents">
+		<% include menu %>
+<!-- 		<p>User info:</p>
+		<%= user.uploads %>
 
-<h1>PROFILE</h1>
+		<p>urls:</p>
+		<%= urls %> -->
 
-<p>User info:</p>
-<%= user.uploads %>
-
-<p>urls:</p>
-<%= urls %>
-
-<a href='/logout'>LOG OUT</a>
-
-<link href="libs/swipebox/swipebox.css" rel="stylesheet" />
-<link href="stylesheets/gallery.css" rel="stylesheet">
+		<link href="libs/swipebox/swipebox.css" rel="stylesheet" />
+		<link href="stylesheets/gallery.css" rel="stylesheet">
 
 
-<div id="loading"></div>
+		<div id="loading"></div>
 
-<div id="gallery"></div>
+		<div id="gallery"></div>
 
-<!-- JavaScript Includes -->
+		<!-- JavaScript Includes -->
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="libs/swipebox/jquery.swipebox.min.js"></script>
-<script type="text/javascript" src="libs/jquery.loadImage.js"></script>
-<script type="text/javascript" src="js/gallery.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="libs/swipebox/jquery.swipebox.min.js"></script>
+		<script type="text/javascript" src="libs/jquery.loadImage.js"></script>
+		<script type="text/javascript" src="js/gallery.js"></script>
+	</div>
+	<% include footer %>
+	
+</body>
+
+</html>
+
+

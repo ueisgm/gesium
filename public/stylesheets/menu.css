@@ -1,0 +1,22 @@
+#menu_container {
+	height: 50px;
+	background-color: #000000;
+	text-align: left;
+}
+
+#menu_logo {
+	margin-top: 12px;
+}
+
+.menu_icon {
+	font-size: 25px;
+	position: absolute;
+	padding: 9px;
+	width: 38px;
+	display: inline;
+}
+
+.menu_icon:hover {
+	background-color: #FFFFFF;
+	color: #000000;
+};

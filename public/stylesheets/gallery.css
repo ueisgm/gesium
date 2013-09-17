@@ -1,20 +1,7 @@
-
-/*-------------------------
-	Simple reset
---------------------------*/
-
-
 *{
 	margin:0;
 	padding:0;
 }
-
-
-/*-------------------------
-	General Styles
---------------------------*/
-
-
 html{
 	background-color: #F4F4F4;
 	overflow:hidden;
@@ -110,4 +97,12 @@ section, footer, header, aside{
 	-webkit-transform:scale(1);
 	-moz-transform:scale(1);
 	transform:scale(1);
+}
+
+#instructions {
+	position: absolute;
+	color: rgba(255,255,255,0.5);
+	bottom: 60px;
+	left: 50%;
+	margin-left: -180px;
 }

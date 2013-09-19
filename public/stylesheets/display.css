@@ -1,0 +1,80 @@
+
+/*
+html {
+	background: url(../assets/bg.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+body {
+	background-color:(0,0,0,0.9);
+	opacity: 0.5;
+}
+
+#contents {
+	background-color:(0,0,0,0.9);
+	opacity: 0.5;
+}
+*/
+
+.custom-row {
+	width: 960px;
+}
+
+h1, p {
+	color: white;
+}
+
+body {
+	background: url(../assets/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+
+#overlay {
+	background-color: #000000;
+	opacity: 0.7;
+	position: absolute;
+	z-index: -2;
+	height: 100%;
+	width: 100%;
+}
+
+
+#contents {
+	position: relative;
+	background-color: black;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
+
+#picture-title {
+	margin: 15px 15px 15px 25px;
+}
+
+#picture-window {
+	margin: 0px 15px 15px 0px;
+	text-align: center;
+}
+
+#picture {
+	max-height: 400px;
+}
+
+#picture-description {
+	margin: 30px 15px 15px 25px;
+}
+
+#picture-title:hover {
+	opacity: 0.5;
+}
+
+#picture-description:hover {
+	opacity: 0.5;
+}
